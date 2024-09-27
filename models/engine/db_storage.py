@@ -12,13 +12,12 @@ from models.place import Place
 from models.review import Review
 from models.amenity import Amenity
 
-"""SQLAlchemy TIME TO SHINE"""
+
 class DBStorage:
-    """ create table in database"""
+    """ create tables in environmental"""
     __engine = None
     __session = None
 
-    """basic function for user base variables"""
     def __init__(self):
         user = getenv("HBNB_MYSQL_USER")
         passwd = getenv("HBNB_MYSQL_PWD")
@@ -34,7 +33,10 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """returns dictionary of object"""
+        """returns a dictionary
+        Return:
+            returns a dictionary of __object
+        """
         dic = {}
         if cls:
             if isinstance(cls, str):
@@ -53,27 +55,30 @@ class DBStorage:
         return (dic)
 
     def new(self, obj):
-        """add a new element to table"""
+        """add a new element in the table
+        """
         self.__session.add(obj)
 
     def save(self):
-        """save changes in the table"""
+        """save changes
+        """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete object specified in table"""
+        """delete an element in the table
+        """
         if obj:
             self.session.delete(obj)
 
     def reload(self):
-        """configuration for database"""
-        """make session from current state"""
+        """configuration
+        """
         Base.metadata.create_all(self.__engine)
-        """creates tables in database and thats your session"""
         sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sec)
         self.__session = Session()
 
     def close(self):
-        """ calls remove() """
+        """ calls remove()
+        """
         self.__session.close()
