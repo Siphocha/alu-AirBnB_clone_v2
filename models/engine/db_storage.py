@@ -12,13 +12,13 @@ from models.place import Place
 from models.review import Review
 from models.amenity import Amenity
 
-
 class DBStorage:
-    """ create tables in environmental"""
+    """ create tables in environment"""
     __engine = None
     __session = None
 
     def __init__(self):
+        """Initalizing database variables"""
         user = getenv("HBNB_MYSQL_USER")
         passwd = getenv("HBNB_MYSQL_PWD")
         db = getenv("HBNB_MYSQL_DB")
@@ -33,10 +33,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """returns a dictionary
-        Return:
-            returns a dictionary of __object
-        """
+        """returns a dictionary of __object"""
         dic = {}
         if cls:
             if isinstance(cls, str):
@@ -55,30 +52,25 @@ class DBStorage:
         return (dic)
 
     def new(self, obj):
-        """add a new element in the table
-        """
+        """adds new element to table"""
         self.__session.add(obj)
 
     def save(self):
-        """save changes
-        """
+        """save changes"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete an element in the table
-        """
+        """deletes in the table"""
         if obj:
             self.session.delete(obj)
 
     def reload(self):
-        """configuration
-        """
+        """configures databse settings for reload. """
         Base.metadata.create_all(self.__engine)
         sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sec)
         self.__session = Session()
 
     def close(self):
-        """ calls remove()
-        """
+        """stops the session in the database."""
         self.__session.close()

@@ -65,10 +65,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """creates dictionary of the class  and returns
-        Return:
-            returns a dictionary of all the key values in __dict__
-        """
+        """creates dictionary of the class  and returns"""
         my_dict = dict(self.__dict__)
         my_dict["__class__"] = str(type(self).__name__)
         my_dict["created_at"] = self.created_at.isoformat()
@@ -78,6 +75,5 @@ class BaseModel:
         return my_dict
 
     def delete(self):
-        """ delete object
-        """
+        """ delete object"""
         models.storage.delete(self)

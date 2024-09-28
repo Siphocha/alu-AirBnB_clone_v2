@@ -14,7 +14,7 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """Defines the HolbertonBnB command interpreter."""
+    """Defines the HBNB Console AkA: Baseline functionality through console"""
 
     prompt = "(hbnb) "
     __classes = {
@@ -28,22 +28,21 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def emptyline(self):
-        """Ignore empty spaces."""
+        """Ignores empty lines"""
         pass
 
     def do_quit(self, line):
-        """Quit command to exit the program."""
+        """Quits command from commandline"""
         return True
 
     def do_EOF(self, line):
-        """EOF signal to exit the program."""
+        """EOF signal to exit"""
         print("")
         return True
 
     def do_create(self, line):
-        """Usage: create <class> <key 1>=<value 2> <key 2>=<value 2> ...
-        Create a new class instance with given keys/values and print its id.
-        """
+        """create class e.g: <class> <key 1>=<value 2> <key 2>=<value 2>
+        Create a new class instance with given keys/values and print its id."""
         try:
             if not line:
                 raise SyntaxError()
@@ -70,18 +69,12 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
 
         except SyntaxError:
-            print("** class name missing **")
+            print("**class name not present**")
         except NameError:
-            print("** class doesn't exist **")
+            print("**class isn't here bro**")
 
     def do_show(self, line):
-        """Prints the string representation of an instance
-        Exceptions:
-            SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
-            IndexError: when there is no id given
-            KeyError: when there is no valid id given
-        """
+        """Prints the string representation of an instance"""
         try:
             if not line:
                 raise SyntaxError()
@@ -106,13 +99,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id
-        Exceptions:
-            SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
-            IndexError: when there is no id given
-            KeyError: when there is no valid id given
-        """
+        """Deletes an instance on class name and id"""
         try:
             if not line:
                 raise SyntaxError()
@@ -129,18 +116,16 @@ class HBNBCommand(cmd.Cmd):
             else:
                 raise KeyError()
         except SyntaxError:
-            print("** class name missing **")
+            print("** class name missing bro **")
         except NameError:
-            print("** class doesn't exist **")
+            print("** class doesn't exist bro **")
         except IndexError:
-            print("** instance id missing **")
+            print("** id missing **")
         except KeyError:
-            print("** no instance found **")
+            print("** nothing found **")
 
     def do_all(self, line):
-        """Usage: all or all <class> or <class>.all()
-        Display string representations of all instances of a given class.
-        If no class is specified, displays all instantiated objects."""
+        """Display string representations of all instances of a named class"""
         if not line:
             o = storage.all()
             print([o[k].__str__() for k in o])
@@ -157,15 +142,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, line):
-        """Updates an instanceby adding or updating attribute
-        Exceptions:
-            SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
-            IndexError: when there is no id given
-            KeyError: when there is no valid id given
-            AttributeError: when there is no attribute given
-            ValueError: when there is no value given
-        """
+        """Updates an instanceby adding or updating attribute"""
         try:
             if not line:
                 raise SyntaxError()
@@ -189,21 +166,20 @@ class HBNBCommand(cmd.Cmd):
                 v.__dict__[my_list[2]] = my_list[3]
                 v.save()
         except SyntaxError:
-            print("** class name missing **")
+            print("**class name missing dude**")
         except NameError:
-            print("** class doesn't exist **")
+            print("**class doesn't exist dude **")
         except IndexError:
-            print("** instance id missing **")
+            print("**instance id missing dude**")
         except KeyError:
-            print("** no instance found **")
+            print("**no instance found dude**")
         except AttributeError:
             print("** attribute name missing **")
         except ValueError:
             print("** value missing **")
 
     def count(self, line):
-        """count the number of instances of a class
-        """
+        """count the number of instances of a class"""
         counter = 0
         try:
             my_list = split(line, " ")
@@ -216,15 +192,10 @@ class HBNBCommand(cmd.Cmd):
                     counter += 1
             print(counter)
         except NameError:
-            print("** class doesn't exist **")
+            print("**class doesn't exist man**")
 
     def strip_clean(self, args):
-        """strips the argument and return a string of command
-        Args:
-            args: input list of args
-        Return:
-            returns string of argumetns
-        """
+        """strips the argument and return a string of command"""
         new_list = []
         new_list.append(args[0])
         try:
@@ -242,9 +213,7 @@ class HBNBCommand(cmd.Cmd):
         return " ".join(i for i in new_list)
 
     def default(self, line):
-        """retrieve all instances of a class and
-        retrieve the number of instances
-        """
+        """retrieve all instances of a class, retrieve the number of instances"""
         my_list = line.split('.')
         if len(my_list) >= 2:
             if my_list[1] == "all()":

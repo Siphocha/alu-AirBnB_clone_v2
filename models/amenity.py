@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 
 
 class Amenity(BaseModel, Base):
-    """Amenities of a place"""
+    """Amenities of a place they will rent"""
     __tablename__ = 'amenities'
     name = Column(String(128), nullable=False)
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
