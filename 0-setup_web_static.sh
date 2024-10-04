@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 #this srcipt creates 5 folers and 1 fake HTML test script.(for testing Nginx config)
 #Update Nginx configuration to serve content of file path
 
