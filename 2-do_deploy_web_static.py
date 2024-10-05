@@ -1,33 +1,27 @@
 #!/usr/bin/python3
-"""Fabric function sends archived static site to webservers"""
-
-
-from fabric.api import put, run, env
+"""Fabric script that distributes an archive to your web servers"""
+from fabric.api import env, put, run
 from os.path import exists
-# remotely exexutes commands in both servers if run in one of them.
+
 env.hosts = ["3.88.163.237", "34.227.205.241"]
 
 
 def do_deploy(archive_path):
-    """Archives to web-servers"""
-    if exists(archive_path) is False:
+    """Function to distribute an archive to your web servers"""
+    if not exists(archive_path):
         return False
-    # If archive isn't even there archive nothing
     try:
-        file_n = archive_path.split("/")[-1]
-        no_ext = file_n.split(".")[0]
-        path = "/data/web_static/releases/"
-        # uploads archived folder to /tmp/
-        put(archive_path, '/tmp/')
-
-# commands to uncompress folder, delete compressed, delete link, creat new link
-        run('mkdir -p {}{}/'.format(path, no_ext))
-        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
-        run('rm /tmp/{}'.format(file_n))
-        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
-        run('rm -rf {}{}/web_static'.format(path, no_ext))
+        file_name = archive_path.split("/")[-1]
+        name = file_name.split(".")[0]
+        path_name = "/data/web_static/releases/" + name
+        put(archive_path, "/tmp/")
+        run("mkdir -p {}/".format(path_name))
+        run('tar -xzf /tmp/{} -C {}/'.format(file_name, path_name))
+        run("rm /tmp/{}".format(file_name))
+        run("mv {}/web_static/* {}".format(path_name, path_name))
+        run("rm -rf {}/web_static".format(path_name))
         run('rm -rf /data/web_static/current')
-        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+        run('ln -s {}/ /data/web_static/current'.format(path_name))
         return True
-    except BaseException:
+    except Exception:
         return False
