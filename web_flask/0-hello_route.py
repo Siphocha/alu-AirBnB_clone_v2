@@ -10,8 +10,7 @@ def Hello_HBNB():
     """prints out when ran"""
     return "Hello HBNB!"
 
+
 if __name__ == "__main__":
     """Define which port application runs from"""
     app.run(host="0.0.0.0", port="5000")
-
-
