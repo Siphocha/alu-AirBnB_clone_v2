@@ -33,12 +33,7 @@ def display_python(text="is cool"):
 @app.route('/number/<n>', strict_slashes=False)
 def is_number(n):
     """Function for showcasing if integers work fine"""
-    try:
-        int(n)
-        return "n is a number"
-    except ValueError:
-        return "n is not a number"
-
+    return "{:d} is a number".format(n)
 
 if __name__ == '__main__':
     """Define which port application runs from"""
