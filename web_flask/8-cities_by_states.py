@@ -7,6 +7,7 @@ from models import storage
 
 app = Flask(__name__)
 
+
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     """states and cities listed in alphabetical order"""
@@ -18,6 +19,7 @@ def cities_by_states():
 def teardown_db(exception):
     """storage closes when teardown occurs"""
     storage.close()
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
